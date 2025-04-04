@@ -63,7 +63,7 @@ export class SlotMachine {
     for (let i = 0; i < REEL_COUNT; i++) {
       const reel = new Reel(SYMBOLS_PER_REEL, SYMBOL_SIZE);
       // Dynamically setting positions of reels, making the game optimized and scalable for different amount of reels or symbols.
-      reel.container.y = i * (REEL_HEIGHT + REEL_SPACING);
+      reel.container.y = i * (REEL_HEIGHT + REEL_SPACING) - 20;
       reel.container.x -= (SYMBOL_SPACING * SYMBOLS_PER_REEL) / 2;
       this.container.addChild(reel.container);
       this.reels.push(reel);
