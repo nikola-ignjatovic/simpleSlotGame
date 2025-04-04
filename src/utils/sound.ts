@@ -45,4 +45,13 @@ export const sound = {
     sound.play();
     console.log(`Playing sound: ${alias}`);
   },
+
+  stop: (alias: string): void => {
+    const sound = soundMap[alias];
+    if (!sound) {
+      console.error(`No sound found for alias: ${alias}`);
+      return;
+    }
+    sound.stop();
+  },
 };

@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 import { AssetLoader } from "../utils/AssetLoader";
 import { SYMBOL_SPACING } from "../utils/constants";
+import { sound } from "../utils/sound";
 
 const SYMBOL_TEXTURES = [
   "symbol1.png",
@@ -37,7 +38,7 @@ export class Reel {
     // Create and position the symbols vertically in the container
     for (let i = 0; i < this.symbolCount; i++) {
       const symbol = this.createRandomSymbol(); // Create a random symbol sprite
-      symbol.x = i * this.symbolSize + i * SYMBOL_SPACING;
+      symbol.x = i * this.symbolSize + i * SYMBOL_SPACING; // Initial position horizontally
       symbol.y = 0;
 
       this.container.addChild(symbol); // Add the symbol to the container
@@ -65,7 +66,8 @@ export class Reel {
   public update(delta: number): void {
     if (!this.isSpinning && this.speed === 0) return;
 
-    // TODO:Move symbols horizontally
+    // Move each symbol horizontally by the speed value
+    this.moveSymbolsHorizontally(delta);
 
     // If we're stopping, slow down the reel
     if (!this.isSpinning && this.speed > 0) {
@@ -79,8 +81,38 @@ export class Reel {
     }
   }
 
+  private moveSymbolsHorizontally(delta: number): void {
+    // Move each symbol horizontally by the speed value
+    for (let i = 0; i < this.symbols.length; i++) {
+      this.symbols[i].x -= this.speed * delta; // Move to the left
+    }
+
+    // If a symbol has moved off-screen, reset its position to the far right
+    if (this.symbols[0].x <= -this.symbolSize) {
+      // Recycle symbol to the right side
+      this.symbols.push(this.symbols.shift()!); // Remove the first symbol and add it to the end
+      this.symbols[this.symbols.length - 1].x =
+        this.symbols[this.symbols.length - 2].x +
+        this.symbolSize +
+        SYMBOL_SPACING; // Place it at the end
+    }
+  }
+
   private snapToGrid(): void {
-    // TODO: Snap symbols to horizontal grid positions
+    // Snap the positions of the symbols to the grid
+    const correctionFactor = 0.1; // Small factor to smooth the snapping (less abrupt)
+
+    // Align symbols back to their original grid positions with smooth transitions
+    for (let i = 0; i < this.symbols.length; i++) {
+      const targetX = i * (this.symbolSize + SYMBOL_SPACING);
+
+      // Smoothly adjust positions to grid target (avoid abrupt snapping)
+      this.symbols[i].x =
+        targetX + correctionFactor * (this.symbols[i].x - targetX);
+    }
+
+    // stopping sound when reels snap
+    sound.stop("Reel spin");
   }
 
   public startSpin(): void {
