@@ -147,11 +147,11 @@ export class Reel {
   }
 
   // Public getter and setter for symbols
-  public getSymbols(): Array<any> {
+  public getSymbols(): PIXI.Sprite[] {
     return this.symbols;
   }
 
-  public setSymbols(value: Array<any>): void {
+  public setSymbols(value: PIXI.Sprite[]): void {
     this.symbols = value;
   }
 }
