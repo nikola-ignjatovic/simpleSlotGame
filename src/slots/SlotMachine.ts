@@ -136,8 +136,31 @@ export class SlotMachine {
       console.log("Winner!");
 
       if (this.winAnimation) {
-        // TODO: Play the win animation found in "big-boom-h" spine
+        this.playWinAnimation();
       }
+    }
+  }
+
+  /**
+   * Plays win animation and hides it after completion
+   * @private
+   */
+  private playWinAnimation(): void {
+    console.log("Playing win animation");
+    if (this.winAnimation) {
+      this.winAnimation.visible = true;
+      this.winAnimation.state.setAnimation(0, "start", false);
+
+      // Add event listener for animation completion
+      // Add an event listener for when the animation is complete
+      this.winAnimation.state.addListener({
+        complete: (trackEntry: any) => {
+          if (trackEntry.animation.name === "start") {
+            // Hide the win animation when its finished
+            if (this.winAnimation) this.winAnimation.visible = false;
+          }
+        },
+      });
     }
   }
 
