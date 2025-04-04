@@ -98,7 +98,7 @@ export class Reel {
     }
   }
 
-  private snapToGrid(): void {
+  public snapToGrid(): void {
     // Snap the positions of the symbols to the grid
     const correctionFactor = 0.1; // Small factor to smooth the snapping (less abrupt)
 
@@ -123,5 +123,35 @@ export class Reel {
   public stopSpin(): void {
     this.isSpinning = false;
     // The reel will gradually slow down in the update method
+  }
+
+  // Getters (used for testing)
+  // Public getters and setters methods for testing
+
+  // Public getter and setter for isSpinning
+  public getIsSpinning(): boolean {
+    return this.isSpinning;
+  }
+
+  public setIsSpinning(value: boolean): void {
+    this.isSpinning = value;
+  }
+
+  // Public getter and setter for speed
+  public getSpeed(): number {
+    return this.speed;
+  }
+
+  public setSpeed(value: number): void {
+    this.speed = value;
+  }
+
+  // Public getter and setter for symbols
+  public getSymbols(): Array<any> {
+    return this.symbols;
+  }
+
+  public setSymbols(value: Array<any>): void {
+    this.symbols = value;
   }
 }
