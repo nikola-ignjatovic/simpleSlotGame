@@ -46,6 +46,12 @@ export const sound = {
     console.log(`Playing sound: ${alias}`);
   },
 
+  /**
+   * Stops a sound using its alias.
+   * Logs an error if the alias is not found in the sound map.
+   *
+   * @param alias - The name of the sound to stop.
+   */
   stop: (alias: string): void => {
     const sound = soundMap[alias];
     if (!sound) {
