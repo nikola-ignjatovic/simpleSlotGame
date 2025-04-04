@@ -6,7 +6,7 @@ import { AssetLoader } from "../utils/AssetLoader";
 import { Spine } from "pixi-spine";
 import { SYMBOL_SPACING } from "../utils/constants";
 
-const REEL_COUNT = 2;
+const REEL_COUNT = 4;
 const SYMBOLS_PER_REEL = 6;
 const SYMBOL_SIZE = 150;
 const REEL_HEIGHT = SYMBOL_SIZE;
